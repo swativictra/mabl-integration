@@ -2,7 +2,7 @@ name: Run Mabl Tests
 
 on:
   push:
-    branches: [main]  # You can change this to your desired branch
+    branches: [main]
   pull_request:
 
 jobs:
@@ -14,11 +14,15 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Install Mabl CLI
-      run: curl -sL https://app.mabl.com/install.sh | bash
+      run: |
+        curl -fsSL https://downloads.mabl.com/cli/mabl-cli-latest-linux.tar.gz -o mabl-cli.tar.gz
+        mkdir mabl-cli
+        tar -xzf mabl-cli.tar.gz -C mabl-cli
+        sudo mv mabl-cli/mabl /usr/local/bin/
 
     - name: Run Mabl Tests
       run: |
         mabl tests run \
           --api-key ${{ secrets.MABL_API_KEY }} \
-          --application-id YOUR_APP_ID \
-          --environment-id YOUR_ENV_ID
+          --application-id IPQENisJNEutPllfOwG5DA-a\
+          --environment-id QrhJzHq6UlThFhhPYqJhhA-e
