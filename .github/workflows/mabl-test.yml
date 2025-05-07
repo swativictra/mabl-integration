@@ -13,6 +13,12 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    - name: Install Mabl CLI
+      run: |
+        curl -fsSL https://downloads.mabl.com/cli/mabl-cli-latest-linux.tar.gz -o mabl-cli.tar.gz
+        tar -xzf mabl-cli.tar.gz
+        sudo mv mabl-cli /usr/local/bin/
+
     - name: Verify Mabl CLI Installation
       run: mabl --version  # This will confirm that the Mabl CLI is installed
 
@@ -22,4 +28,4 @@ jobs:
           --api-key ${{ secrets.MABL_API_KEY }} \
           --application-id IPQENisJNEutPllfOwG5DA-a \
           --environment-id QrhJzHq6UlThFhhPYqJhhA-e \
-          --from-plan-id vEm8ioYOufFWRPKSGiWWUA-p  # Run tests from the specified test plan
+          --from-plan-id vEm8ioYOufFWRPKSGiWWUA-p
