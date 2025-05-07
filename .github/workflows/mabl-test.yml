@@ -1,28 +1,25 @@
-name: Run Mabl Tests
+name: Run Mabl Tests from Plan
 
 on:
   push:
-    branches: [main]
+    branches: [main]  # Change this to your desired branch
   pull_request:
 
 jobs:
   run-mabl-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Change this if you're using a self-hosted runner
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Install Mabl CLI
-      run: |
-        curl -fsSL https://downloads.mabl.com/cli/mabl-cli-latest-linux.tar.gz -o mabl-cli.tar.gz
-        mkdir mabl-cli
-        tar -xzf mabl-cli.tar.gz -C mabl-cli
-        sudo mv mabl-cli/mabl /usr/local/bin/
+    - name: Verify Mabl CLI Installation
+      run: mabl --version  # This will confirm that the Mabl CLI is installed
 
-    - name: Run Mabl Tests
+    - name: Run Mabl Tests from Test Plan
       run: |
         mabl tests run \
           --api-key ${{ secrets.MABL_API_KEY }} \
-          --application-id IPQENisJNEutPllfOwG5DA-a\
-          --environment-id QrhJzHq6UlThFhhPYqJhhA-e
+          --application-id IPQENisJNEutPllfOwG5DA-a \
+          --environment-id QrhJzHq6UlThFhhPYqJhhA-e \
+          --from-plan-id vEm8ioYOufFWRPKSGiWWUA-p  # Run tests from the specified test plan
